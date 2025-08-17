@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Technique - Tam Congo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #004792;
+            --secondary: #003a75;
+            --accent: #0070c0;
+            --light: #f5f9ff;
+            --dark: #333;
+            --gray: #777;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            background: url(./images/logo1.jpeg) no-repeat center center/cover;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 0;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled .logo-text h1 {
+            font-size: 20px;
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        /* Service Hero Section */
+        .service-hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 71, 146, 0.377), rgba(0, 71, 146, 0.536)), url('./images/maintenancetec.jpeg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            margin-top: 90px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-hero-content {
+            max-width: 800px;
+            padding: 40px;
+            border-radius: 15px;
+        }
+        
+        .service-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .service-hero p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 5%;
+            background-color: var(--light);
+            font-size: 16px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+            color: var(--gray);
+        }
+        
+        /* Service Details Section */
+        .service-details {
+            padding: 80px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        
+        .service-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .service-content h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .service-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .service-content p {
+            margin-bottom: 20px;
+            color: var(--gray);
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .benefit-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-card i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .service-image img {
+            width: 600%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Types Section */
+        .types {
+            padding: 80px 5%;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .type-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .type-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .type-content {
+            padding: 30px;
+        }
+        
+        .type-content ul {
+            list-style-type: none;
+            margin: 20px 0;
+        }
+        
+        .type-content ul li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .type-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Industries Section */
+        .industries {
+            padding: 80px 5%;
+            background-color: var(--white);
+        }
+        
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .industry-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .industry-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .industry-card i {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .industry-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 5%;
+            background: linear-gradient(rgba(0, 71, 146, 0.9), rgba(0, 71, 146, 0.9)), url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--white);
+        }
+        
+        .cta .btn:hover {
+            background-color: transparent;
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 70px 5% 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover {
+            color: white;
+        }
+        
+        .footer-contact .contact-item {
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .service-hero h1 {
+                font-size: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 90px);
+                background-color: var(--white);
+                transition: left 0.3s;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 30px;
+            }
+            
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+            
+            .service-hero h1 {
+                font-size: 32px;
+            }
+            
+            .service-hero p {
+                font-size: 18px;
+            }
+            
+            .service-image {
+                min-height: 300px;
+            }
+        }
+        /* Animations générales */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-placeholder floating"></div>
+            <div class="logo-text">
+                <h1>Tam Congo</h1>
+                <p>Votre partenaire technique de confiance</p>
+            </div>
+        </div>
+        
+        <div class="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#services">Nos services</a></li>
+                <li><a href="index.html#projets">Nos projets</a></li>
+                <li><a href="index.html#apropos">À propos</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Service Hero Section -->
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <h1>Maintenance Technique</h1>
+            <p>Des solutions de maintenance préventive et corrective pour garantir la performance de vos équipements</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Accueil</a>
+        <span>/</span>
+        <a href="index.html#services">Nos services</a>
+        <span>/</span>
+        <a href="#">Maintenance Technique</a>
+    </div>
+
+    <!-- Service Details Section -->
+    <section class="service-details">
+        <div class="service-content">
+            <h2>Expertise en maintenance technique industrielle</h2>
+            <p>Tam Congo propose des services de maintenance technique complets pour assurer la continuité opérationnelle de vos équipements industriels. Notre approche proactive réduit les temps d'arrêt imprévus et prolonge la durée de vie de vos machines.</p>
+            <p>Avec une équipe de techniciens certifiés et une méthodologie rigoureuse, nous intervenons sur tous types d'équipements : machines de production, systèmes hydrauliques, pneumatiques, convoyeurs, groupes électrogènes et bien plus.</p>
+            
+            <h3>Nos avantages techniques</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Intervention rapide</h3>
+                    <p>Disponibilité 24/7 avec des délais d'intervention optimisés</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Optimisation des coûts</h3>
+                    <p>Réduction des coûts de maintenance et d'immobilisation</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Expertise technique</h3>
+                    <p>Techniciens spécialisés sur les principales marques industrielles</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Conformité normative</h3>
+                    <p>Respect strict des normes de sécurité et environnementales</p>
+                </div>
+            </div>
+            
+            <h3>Nos engagements qualité</h3>
+            <ul style="list-style-type: none; margin: 20px 0;">
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Diagnostic précis et rapide des pannes
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Utilisation de pièces détachées d'origine
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Rapports d'intervention détaillés
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Suivi personnalisé de vos équipements
+                </li>
+            </ul>
+        </div>
+        
+        <div class="service-image">
+            <img src="./images/maint.jpeg" alt="Technicien en maintenance industrielle">
+        </div>
+    </section>
+
+    <!-- Types Section -->
+    <section class="types">
+        <h2 class="section-title">Nos solutions de maintenance</h2>
+        
+        <div class="types-grid">
+            <div class="type-card">
+                <div class="type-header">
+                    <h3>Maintenance Préventive</h3>
+                </div>
+                <div class="type-content">
+                    <p>Programmes de maintenance planifiée pour anticiper les défaillances et optimiser la performance</p>
+                    <ul>
+                        <li>Contrôles périodiques</li>
+                        <li>Lubrification et graissage</li>
+                        <li>Vérification des paramètres</li>
+                        <li>Nettoyage et calibration</li>
+                        <li>Rapports d'état détaillés</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="type-card">
+                <div class="type-header">
+                    <h3>Maintenance Corrective</h3>
+                </div>
+                <div class="type-content">
+                    <p>Interventions rapides pour résoudre les pannes et rétablir la production dans les meilleurs délais</p>
+                    <ul>
+                        <li>Diagnostic technique</li>
+                        <li>Remplacement de pièces</li>
+                        <li>Réparation sur site</li>
+                        <li>Assistance technique</li>
+                        <li>Mise en service</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="type-card">
+                <div class="type-header">
+                    <h3>Maintenance Prédictive</h3>
+                </div>
+                <div class="type-content">
+                    <p>Technologies avancées pour anticiper les défaillances avant qu'elles ne surviennent</p>
+                    <ul>
+                        <li>Analyse vibratoire</li>
+                        <li>Thermographie infrarouge</li>
+                        <li>Contrôle ultrasonique</li>
+                        <li>Suivi de performance</li>
+                        <li>Alertes prédictives</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries Section -->
+    <section class="industries">
+        <h2 class="section-title">Secteurs d'intervention</h2>
+        
+        <div class="industries-grid">
+            <div class="industry-card">
+                <i class="fas fa-industry"></i>
+                <h3>Industrie manufacturière</h3>
+                <p>Maintenance de lignes de production et machines-outils</p>
+            </div>
+            
+            <div class="industry-card">
+                <i class="fas fa-car"></i>
+                <h3>Automobile</h3>
+                <p>Maintenance d'équipements de chaînes de montage</p>
+            </div>
+            
+            <div class="industry-card">
+                <i class="fas fa-tractor"></i>
+                <h3>Agroalimentaire</h3>
+                <p>Maintenance d'équipements de transformation alimentaire</p>
+            </div>
+            
+            <div class="industry-card">
+                <i class="fas fa-plug"></i>
+                <h3>Énergie</h3>
+                <p>Maintenance de groupes électrogènes et installations</p>
+            </div>
+            
+            <div class="industry-card">
+                <i class="fas fa-warehouse"></i>
+                <h3>Logistique</h3>
+                <p>Maintenance de convoyeurs et systèmes de manutention</p>
+            </div>
+            
+            <div class="industry-card">
+                <i class="fas fa-oil-well"></i>
+                <h3>Pétrochimie</h3>
+                <p>Maintenance d'équipements en environnement ATEX</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Besoin d'un contrat de maintenance ?</h2>
+        <p>Nos solutions de maintenance sur mesure garantissent la disponibilité de vos équipements et optimisent vos coûts d'exploitation.</p>
+        <a href="index.html#contact" class="btn">Demander un devis</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <div class="footer-logo">
+                    <h3>Tam Congo</h3>
+                    <p>Votre partenaire technique de confiance</p>
+                </div>
+                <p>Des solutions techniques innovantes pour répondre aux défis industriels du Congo et au-delà.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.html#services">Nos services</a></li>
+                    <li><a href="index.html#projets">Nos projets</a></li>
+                    <li><a href="index.html#apropos">À propos</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Nos services</h4>
+                <ul>
+                    <li><a href="ContructionMetalique.html">Construction Métallique</a></li>
+                    <li><a href="maintenancetechnique.html">Maintenance Technique</a></li>
+                    <li><a href="solutions-interim.html">Solutions en Intérim</a></li>
+                    <li><a href="transportRoutier.html">Transport Routier</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links footer-contact">
+                <h4>Coordonnées</h4>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>+243 998 508 490</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>tamcgo@yahoo.fr</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>Kisangani, République Democratique du Congo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Arnold kana. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

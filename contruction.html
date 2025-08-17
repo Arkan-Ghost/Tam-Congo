@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Métallique - Tam Congo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #004792;
+            --secondary: #003a75;
+            --accent: #0070c0;
+            --light: #f5f9ff;
+            --dark: #333;
+            --gray: #777;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 0;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled .logo-text h1 {
+            font-size: 20px;
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        /* Service Hero Section */
+        .service-hero {
+            background: linear-gradient(rgba(0, 71, 146, 0.85), url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            margin-top: 90px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-hero-content {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(0, 71, 146, 0.7);
+            border-radius: 15px;
+        }
+        
+        .service-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .service-hero p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 5%;
+            background-color: var(--light);
+            font-size: 16px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+            color: var(--gray);
+        }
+        
+        /* Service Details Section */
+        .service-details {
+            padding: 80px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        
+        .service-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .service-content h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .service-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .service-content p {
+            margin-bottom: 20px;
+            color: var(--gray);
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .benefit-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-card i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .service-image-placeholder {
+            height: 100%;
+            min-height: 500px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 24px;
+            background: linear-gradient(rgba(0, 71, 146, 0.1), rgba(0, 71, 146, 0.2)), url('https://images.unsplash.com/photo-1605106325685-20a6b3d0f9fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center center/cover;
+        }
+        
+        /* Process Section */
+        .process {
+            padding: 80px 5%;
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .process-step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .process-step h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin: 20px 0 15px;
+        }
+        
+        /* Projects Section */
+        .projects {
+            padding: 80px 5%;
+            background-color: var(--white);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .project-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            height: 300px;
+        }
+        
+        .project-img {
+            height: 100%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 18px;
+            transition: all 0.5s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0, 71, 146, 0.9));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover .project-overlay {
+            transform: translateY(0);
+        }
+        
+        .project-overlay h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 5%;
+            background: linear-gradient(rgba(0, 71, 146, 0.9), rgba(0, 71, 146, 0.9)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--white);
+        }
+        
+        .cta .btn:hover {
+            background-color: transparent;
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 70px 5% 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover {
+            color: white;
+        }
+        
+        .footer-contact .contact-item {
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .service-hero h1 {
+                font-size: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 90px);
+                background-color: var(--white);
+                transition: left 0.3s;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 30px;
+            }
+            
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+            
+            .service-hero h1 {
+                font-size: 32px;
+            }
+            
+            .service-hero p {
+                font-size: 18px;
+            }
+            
+            .service-image {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-placeholder">TC</div>
+            <div class="logo-text">
+                <h1>Tam Congo</h1>
+                <p>Votre partenaire technique de confiance</p>
+            </div>
+        </div>
+        
+        <div class="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#services">Nos services</a></li>
+                <li><a href="index.html#projets">Nos projets</a></li>
+                <li><a href="index.html#apropos">À propos</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Service Hero Section -->
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <h1>Construction Métallique</h1>
+            <p>Des structures robustes et innovantes pour vos projets industriels et commerciaux</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Accueil</a>
+        <span>/</span>
+        <a href="index.html#services">Nos services</a>
+        <span>/</span>
+        <a href="#">Construction Métallique</a>
+    </div>
+
+    <!-- Service Details Section -->
+    <section class="service-details">
+        <div class="service-content">
+            <h2>Solutions sur mesure en construction métallique</h2>
+            <p>Chez Tam Congo, nous concevons et réalisons des structures métalliques robustes et innovantes pour répondre aux besoins spécifiques de chaque client. Notre expertise couvre tous les secteurs d'activité, de l'industrie lourde aux infrastructures commerciales.</p>
+            <p>Nous combinons savoir-faire technique, matériaux de qualité et technologies de pointe pour garantir des structures durables, esthétiques et conformes aux normes de sécurité les plus strictes.</p>
+            
+            <h3>Avantages de nos solutions</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Résistance exceptionnelle</h3>
+                    <p>Structures conçues pour résister aux conditions extrêmes et aux charges lourdes</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-ruler-combined"></i>
+                    <h3>Précision dimensionnelle</h3>
+                    <p>Fabrication sur mesure avec une tolérance de précision millimétrique</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Rapidité d'exécution</h3>
+                    <p>Process industrialisé permettant des délais de réalisation optimisés</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Durabilité écologique</h3>
+                    <p>Matériaux recyclables et processus respectueux de l'environnement</p>
+                </div>
+            </div>
+            
+            <h3>Applications</h3>
+            <ul style="list-style-type: none; margin: 20px 0;">
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Bâtiments industriels et entrepôts
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Charpentes métalliques complexes
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Passerelles et structures de ponts
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Structures pour équipements industriels
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 30px; position: relative;">
+                    <i class="fas fa-check" style="position: absolute; left: 0; color: var(--primary);"></i>
+                    Aménagements intérieurs sur mesure
+                </li>
+            </ul>
+        </div>
+        
+        <div class="service-image">
+            <div class="service-image-placeholder">
+                <p>Exemple de structure métallique</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <h2 class="section-title">Notre processus de réalisation</h2>
+        
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Étude & Conception</h3>
+                <p>Analyse des besoins et conception technique avec modélisation 3D</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Ingénierie détaillée</h3>
+                <p>Calculs de résistance, plans d'exécution et sélection des matériaux</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Fabrication</h3>
+                <p>Découpe, formage et assemblage dans notre atelier équipé</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>Montage & Installation</h3>
+                <p>Transport et assemblage sur site par nos équipes qualifiées</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">5</div>
+                <h3>Contrôle & Livraison</h3>
+                <p>Contrôle qualité final et remise des documents techniques</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects">
+        <h2 class="section-title">Nos réalisations en construction métallique</h2>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1617103996702-96ff29b1c467?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                </div>
+                <div class="project-overlay">
+                    <h3>Usine agro-alimentaire</h3>
+                    <p>Structure de 5 000 m² avec pont roulant</p>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1605106325685-20a6b3d0f9fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                </div>
+                <div class="project-overlay">
+                    <h3>Entrepôt logistique</h3>
+                    <p>Charpente métallique de 8 000 m²</p>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                </div>
+                <div class="project-overlay">
+                    <h3>Passerelle industrielle</h3>
+                    <p>Structure de liaison entre bâtiments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Prêt à concrétiser votre projet ?</h2>
+        <p>Notre équipe d'experts est à votre disposition pour étudier votre projet et vous proposer la solution la plus adaptée à vos besoins.</p>
+        <a href="index.html#contact" class="btn">Demander un devis</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <div class="footer-logo">
+                    <h3>Tam Congo</h3>
+                    <p>Votre partenaire technique de confiance</p>
+                </div>
+                <p>Des solutions techniques innovantes pour répondre aux défis industriels du Congo et au-delà.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.html#services">Nos services</a></li>
+                    <li><a href="index.html#projets">Nos projets</a></li>
+                    <li><a href="index.html#apropos">À propos</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Nos services</h4>
+                <ul>
+                    <li><a href="#">Construction Métallique</a></li>
+                    <li><a href="#">Maintenance Technique</a></li>
+                    <li><a href="#">Solutions en Intérim</a></li>
+                    <li><a href="#">Ingénierie Industrielle</a></li>
+                    <li><a href="#">Installations Spéciales</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links footer-contact">
+                <h4>Coordonnées</h4>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>+242 06 123 4567</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>contact@tamcongo.cg</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <p>Brazzaville, République du Congo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Tam Congo. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
